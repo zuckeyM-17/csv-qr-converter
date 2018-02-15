@@ -18,9 +18,9 @@
 
 ### 例）
 
-amazon,https://amazon.com
-google,https://google.jp
-yahoo,https://yahoo.co.jp
+amazon,https://amazon.com  
+google,https://google.jp  
+yahoo,https://yahoo.co.jp  
 
 => amazon.png、google.png、yahoo.png
 がimagesというフォルダに入って生成される。
