@@ -8,25 +8,34 @@
 </head>
 <body>
   <style>
+    body {
+      height: 100%;
+      flex-direction: column;
+      display: flex;
+      align-items: center;
+      margin: 150px 0;
+    }
+
     label {
       color: #CCCCCC;  
       background-color: #FFFFFF;
       border: 1px solid #CCCCCC;
       padding: 20px 30px;
-      display: block;
-      margin: 200px auto;
       width: fit-content;
+      display: block;
+      margin: 20px;
     }
 
     label:hover {
       cursor: pointer;
     }
+
   </style>
-    
     <label for="csv-uploader" id="uploader-label">
         CSVファイルをアップロード
         <input type="file" id="csv-uploader" style="display:none;">
     </label>
+    <a href="https://fastmedia.atlassian.net/wiki/spaces/product/pages/305168385/CSV+QR" target="_blank">How To Use It.</a>
   <script src="js/bundle.js"></script>
 </body>
 </html>

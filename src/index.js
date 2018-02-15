@@ -18,15 +18,17 @@ fileUploader.addEventListener("change", event => {
     const arr = [];
     data.forEach(row => {
       const r = row.split(",");
-      arr.push(
-        QRCode.toDataURL(r[1].trim())
-          .then(url => {
-            img.file(r[0] + ".png", url.split(",")[1], { base64: true });
-          })
-          .catch(err => {
-            console.error(err);
-          })
-      );
+      if (r >= 2) {
+        arr.push(
+          QRCode.toDataURL(r[1].trim())
+            .then(url => {
+              img.file(r[0] + ".png", url.split(",")[1], { base64: true });
+            })
+            .catch(err => {
+              console.error(err);
+            })
+        );
+      }
     });
     Promise.all(arr).then(() => {
       zip.generateAsync({ type: "blob" }).then(content => {

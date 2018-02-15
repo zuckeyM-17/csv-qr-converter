@@ -9250,11 +9250,13 @@ fileUploader.addEventListener("change", function (event) {
     var arr = [];
     data.forEach(function (row) {
       var r = row.split(",");
-      arr.push(_qrcode2.default.toDataURL(r[1].trim()).then(function (url) {
-        img.file(r[0] + ".png", url.split(",")[1], { base64: true });
-      }).catch(function (err) {
-        console.error(err);
-      }));
+      if (r >= 2) {
+        arr.push(_qrcode2.default.toDataURL(r[1].trim()).then(function (url) {
+          img.file(r[0] + ".png", url.split(",")[1], { base64: true });
+        }).catch(function (err) {
+          console.error(err);
+        }));
+      }
     });
     Promise.all(arr).then(function () {
       zip.generateAsync({ type: "blob" }).then(function (content) {
