@@ -7,7 +7,30 @@
   <title>csv-qrcode-converter</title>
 </head>
 <body>
-  <input type="file" id="csv-uploader"/>
+  <style>
+    body {
+      position: relative;
+    }
+
+    label {
+      color: #CCCCCC;  
+      background-color: #FFFFFF;
+      border: 1px solid #CCCCCC;
+      padding: 20px 30px;
+      position: absolute;
+      top: 100px;
+      left: 100px;
+    }
+
+    label:hover {
+      cursor: pointer;
+    }
+  </style>
+    
+    <label for="csv-uploader" id="uploader-label">
+        CSVファイルをアップロード
+        <input type="file" id="csv-uploader" style="display:none;">
+    </label>
   <script src="js/bundle.js"></script>
 </body>
 </html>

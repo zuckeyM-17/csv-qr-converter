@@ -9240,7 +9240,9 @@ var img = zip.folder("images");
 var time = new Date();
 var now = time.getTime();
 
-var fileUploader = document.getElementById("csv-uploader").addEventListener("change", function (event) {
+var fileUploader = document.getElementById("csv-uploader");
+
+fileUploader.addEventListener("change", function (event) {
   var reader = new FileReader();
 
   reader.addEventListener("load", function (event) {
@@ -9266,6 +9268,17 @@ var fileUploader = document.getElementById("csv-uploader").addEventListener("cha
   } else {
     alert("CSVファイルをアップロードしてください。");
   }
+});
+
+var label = document.getElementById("uploader-label");
+label.addEventListener("dragenter", function () {
+  label.style.backgroundColor = '#CCCCCC';
+  label.style.color = '#FFFFFF';
+});
+
+label.addEventListener("dragleave", function () {
+  label.style.backgroundColor = '#FFFFFF';
+  label.style.color = '#CCCCCC';
 });
 
 /***/ }),
