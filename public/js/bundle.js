@@ -9240,31 +9240,34 @@ var img = zip.folder("images");
 var time = new Date();
 var now = time.getTime();
 
+var reader = new FileReader();
+
+reader.addEventListener("load", function (event) {
+  var data = event.target.result.split("\n");
+  var arr = [];
+  data.forEach(function (row) {
+    var r = row.split(",");
+    if (r.length >= 2) {
+      arr.push(_qrcode2.default.toDataURL(r[1].trim()).then(function (url) {
+        console.log(r[0]);
+        console.log(r[1]);
+        img.file(r[0] + ".png", url.split(",")[1], { base64: true });
+      }).catch(function (err) {
+        console.error(err);
+      }));
+    }
+  });
+  Promise.all(arr).then(function () {
+    zip.generateAsync({ type: "blob" }).then(function (content) {
+      location.href = window.URL.createObjectURL(content);
+    });
+  });
+});
+
 var fileUploader = document.getElementById("csv-uploader");
 
 fileUploader.addEventListener("change", function (event) {
-  var reader = new FileReader();
-
-  reader.addEventListener("load", function (event) {
-    var data = event.target.result.split("\n");
-    var arr = [];
-    data.forEach(function (row) {
-      var r = row.split(",");
-      if (r >= 2) {
-        arr.push(_qrcode2.default.toDataURL(r[1].trim()).then(function (url) {
-          img.file(r[0] + ".png", url.split(",")[1], { base64: true });
-        }).catch(function (err) {
-          console.error(err);
-        }));
-      }
-    });
-    Promise.all(arr).then(function () {
-      zip.generateAsync({ type: "blob" }).then(function (content) {
-        location.href = window.URL.createObjectURL(content);
-      });
-    });
-  });
-
+  event.preventDefault();
   if (event.target.files[0].type === "text/csv") {
     reader.readAsText(event.target.files[0]);
   } else {
@@ -9273,12 +9276,33 @@ fileUploader.addEventListener("change", function (event) {
 });
 
 var label = document.getElementById("uploader-label");
-label.addEventListener("dragenter", function () {
+label.addEventListener("dragenter", function (event) {
+  event.preventDefault();
+  event.stopPropagation();
   label.style.backgroundColor = '#CCCCCC';
   label.style.color = '#FFFFFF';
 });
 
-label.addEventListener("dragleave", function () {
+label.addEventListener("dragover", function (event) {
+  event.preventDefault();
+  event.stopPropagation();
+});
+
+label.addEventListener("dragleave", function (event) {
+  event.preventDefault();
+  event.stopPropagation();
+  label.style.backgroundColor = '#FFFFFF';
+  label.style.color = '#CCCCCC';
+});
+
+label.addEventListener("drop", function (event) {
+  event.preventDefault();
+  event.stopPropagation();
+  if (event.dataTransfer.files[0].type === "text/csv") {
+    reader.readAsText(event.dataTransfer.files[0]);
+  } else {
+    alert("CSVファイルをアップロードしてください。");
+  }
   label.style.backgroundColor = '#FFFFFF';
   label.style.color = '#CCCCCC';
 });
